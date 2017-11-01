@@ -14,7 +14,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     let demoId = "2"
     var locationManager: CLLocationManager! = CLLocationManager()
     let synthesizer : AVSpeechSynthesizer = AVSpeechSynthesizer()
-    let serverAddress = "http://127.0.0.1:5000"
+    let serverAddress = "https://8011ac33.ngrok.io"
     var momentString = ""
     var momentPlayed = false
     var lastLocationPostedAt : Double = Date().timeIntervalSinceReferenceDate
@@ -40,24 +40,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         var json = [String:Double]()
         json["longitude"] = long
         json["latitude"] = lat
-        if Date().timeIntervalSinceReferenceDate - self.lastLocationPostedAt > 2 {
+        if Date().timeIntervalSinceReferenceDate - self.lastLocationPostedAt > 3 {
             self.lastLocationPostedAt = Date().timeIntervalSinceReferenceDate
             print("long: \(long), lat: \(long)")
-            do {
-                let data = try JSONSerialization.data(withJSONObject: json, options: [])
-                // Send coordinates to the set up server
-                // Does this stream??
-                let endpoint = self.serverAddress + "/location"
-                let endpointUrl = URL(string: endpoint)!
-                var request = URLRequest(url: endpointUrl)
-                request.httpMethod = "POST"
-                request.httpBody = data
-                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-                request.addValue("application/json", forHTTPHeaderField: "Accept")
-                let task = URLSession.shared.dataTask(with: request)
-                task.resume()
-            } catch{
-            }
+//            do {
+//                let data = try JSONSerialization.data(withJSONObject: json, options: [])
+//                // Send coordinates to the set up server
+//                // Does this stream??
+//                let endpoint = self.serverAddress + "/location"
+//                let endpointUrl = URL(string: endpoint)!
+//                var request = URLRequest(url: endpointUrl)
+//                request.httpMethod = "POST"
+//                request.httpBody = data
+//                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//                request.addValue("application/json", forHTTPHeaderField: "Accept")
+//                let task = URLSession.shared.dataTask(with: request)
+//                task.resume()
+//            } catch{
+//            }
             
             if (self.demoId == "2" || self.momentString == "") {
 
@@ -71,8 +71,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         print("Error: \(error)")
                     } else
                     {
-                        
                         let outputStr = String(data: data!, encoding: String.Encoding.utf8) as String!
+                        print(outputStr!)
                         let momentDict = self.convertToDictionary(text: outputStr!)
                         if (momentDict["prompt"] != nil) {
                             self.momentString = String(describing: momentDict["prompt"]!)

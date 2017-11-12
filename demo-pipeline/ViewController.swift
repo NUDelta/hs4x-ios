@@ -14,7 +14,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     let demoId = "1"
     var locationManager: CLLocationManager! = CLLocationManager()
     let synthesizer : AVSpeechSynthesizer = AVSpeechSynthesizer()
-    let serverAddress = "https://9384ed69.ngrok.io"
+    let serverAddress = "https://8011ac33.ngrok.io"
     var momentString = ""
     var momentPlayed = false
     var lastLocationPostedAt : Double = Date().timeIntervalSinceReferenceDate
@@ -42,7 +42,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         json["latitude"] = lat
         if Date().timeIntervalSinceReferenceDate - self.lastLocationPostedAt > 3 {
             self.lastLocationPostedAt = Date().timeIntervalSinceReferenceDate
+<<<<<<< HEAD
             print("long: \(long), lat: \(lat)")
+=======
+            print("long: \(long), lat: \(long)")
+>>>>>>> 30139fab73babc7cff07b2484cce99f7ee0b498a
 //            do {
 //                let data = try JSONSerialization.data(withJSONObject: json, options: [])
 //                // Send coordinates to the set up server
@@ -71,8 +75,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         print("Error: \(error)")
                     } else
                     {
-                        
                         let outputStr = String(data: data!, encoding: String.Encoding.utf8) as String!
+                        print(outputStr!)
                         let momentDict = self.convertToDictionary(text: outputStr!)
                         if (momentDict["prompt"] != nil) {
                             self.momentString = String(describing: momentDict["prompt"]!)

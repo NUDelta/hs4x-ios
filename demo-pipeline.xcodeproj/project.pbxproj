@@ -47,6 +47,7 @@
 		1D410A4B1F980A1B00C35825 /* demo-pipelineUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "demo-pipelineUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D410A4F1F980A1B00C35825 /* demo_pipelineUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = demo_pipelineUITests.swift; sourceTree = "<group>"; };
 		1D410A511F980A1B00C35825 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1DB45A991FB8C1BC008FAA07 /* kappa_arch_tech.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = kappa_arch_tech.gpx; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +98,7 @@
 		1D410A2E1F980A1B00C35825 /* demo-pipeline */ = {
 			isa = PBXGroup;
 			children = (
+				1DB45A991FB8C1BC008FAA07 /* kappa_arch_tech.gpx */,
 				1D410A2F1F980A1B00C35825 /* AppDelegate.swift */,
 				1D410A311F980A1B00C35825 /* ViewController.swift */,
 				1D410A331F980A1B00C35825 /* Main.storyboard */,

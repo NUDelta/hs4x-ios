@@ -11,15 +11,13 @@ import CoreLocation
 import AVFoundation
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
-    let demoId = "2"
     var locationManager: CLLocationManager! = CLLocationManager()
     let synthesizer : AVSpeechSynthesizer = AVSpeechSynthesizer()
-    let serverAddress = "https://8011ac33.ngrok.io"
+    let serverAddress = "https://e4395189.ngrok.io"
     var momentString = ""
     var momentPlayed = false
     var lastLocationPostedAt : Double = Date().timeIntervalSinceReferenceDate
     @IBOutlet weak var momentTextLabel: UILabel!
-    
     
     func convertToDictionary(text: String) -> [String: Any] {
         if let data = text.data(using: .utf8) {
@@ -42,29 +40,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         json["latitude"] = lat
         if Date().timeIntervalSinceReferenceDate - self.lastLocationPostedAt > 3 {
             self.lastLocationPostedAt = Date().timeIntervalSinceReferenceDate
-            print("long: \(long), lat: \(long)")
-//            do {
-//                let data = try JSONSerialization.data(withJSONObject: json, options: [])
-//                // Send coordinates to the set up server
-//                // Does this stream??
-//                let endpoint = self.serverAddress + "/location"
-//                let endpointUrl = URL(string: endpoint)!
-//                var request = URLRequest(url: endpointUrl)
-//                request.httpMethod = "POST"
-//                request.httpBody = data
-//                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-//                request.addValue("application/json", forHTTPHeaderField: "Accept")
-//                let task = URLSession.shared.dataTask(with: request)
-//                task.resume()
-//            } catch{
-//            }
-            
-            if (self.demoId == "2" || self.momentString == "") {
-
-                let endpoint = self.serverAddress + "/moments/" + self.demoId
+            print("lat: \(lat), long: \(long)")
+            do {
+                let data = try JSONSerialization.data(withJSONObject: json, options: [])
+                // Send coordinates to the set up server
+                // Does this stream??
+                let endpoint = self.serverAddress + "/location"
                 let endpointUrl = URL(string: endpoint)!
                 var request = URLRequest(url: endpointUrl)
-                request.httpMethod = "GET"
+                request.httpMethod = "POST"
+                request.httpBody = data
+                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.addValue("application/json", forHTTPHeaderField: "Accept")
                 let task = URLSession.shared.dataTask(with: request) {
                     (data: Data?, response: URLResponse?, error: Error?) in
                     if(error != nil) {
@@ -76,21 +63,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         let momentDict = self.convertToDictionary(text: outputStr!)
                         if (momentDict["prompt"] != nil) {
                             self.momentString = String(describing: momentDict["prompt"]!)
-                            self.momentPlayed = false
+                            //print(self.momentString)
+                           // self.momentTextLabel.text = self.momentString
+                            let utterance : AVSpeechUtterance = AVSpeechUtterance(string: self.momentString)
+                            utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+                            self.synthesizer.speak(utterance)
+                        }
+                        else {
+                            self.momentString = ""
+                            // print(self.momentString)
+                            // self.momentTextLabel.text = self.momentString
                         }
                     }
                 }
                 task.resume()
+            } catch{
             }
-            if (self.momentString != "") {
-                self.momentTextLabel.text = self.momentString
-                if !self.momentPlayed {
-                    let utterance : AVSpeechUtterance = AVSpeechUtterance(string: self.momentString)
-                    utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
-                    self.synthesizer.speak(utterance)
-                    self.momentPlayed = true
-                }
-            }
+            
         }
         
     }
@@ -110,14 +99,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.startUpdatingLocation()
         }
-        
-        let endpoint = self.serverAddress + "/register/" + self.demoId
-        let endpointUrl = URL(string: endpoint)!
-        var request = URLRequest(url: endpointUrl)
-        request.httpMethod = "GET"
-        let task = URLSession.shared.dataTask(with: request)
-        task.resume()
-
     }
 
     override func didReceiveMemoryWarning() {

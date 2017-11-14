@@ -13,7 +13,7 @@ import AVFoundation
 class ViewController: UIViewController, CLLocationManagerDelegate {
     var locationManager: CLLocationManager! = CLLocationManager()
     let synthesizer : AVSpeechSynthesizer = AVSpeechSynthesizer()
-    let serverAddress = "https://e4395189.ngrok.io"
+    let serverAddress = "https://hs4x.herokuapp.com"
     var momentString = ""
     var momentPlayed = false
     var lastLocationPostedAt : Double = Date().timeIntervalSinceReferenceDate

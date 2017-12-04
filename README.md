@@ -1,0 +1,1 @@
+this is the ios code for the hs4x project. it posts to the server whenever the phone's location updates. there is no setup to run this app, other than having a version of xcode that supports swift 3. however, you can simulate the location using a gpx file - we like to use mapstogpx.com to generate ours, and then convert it into a valid format.

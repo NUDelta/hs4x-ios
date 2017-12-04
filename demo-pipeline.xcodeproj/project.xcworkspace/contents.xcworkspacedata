@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:demo-pipeline.xcodeproj">
+      location = "group:/Users/deltalab/Documents/code/hs4x-ios/demo-pipeline/test.gpx">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>
